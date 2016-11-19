@@ -10,7 +10,11 @@ def promedio_varianza(lista):
     resultado =[promedio,varianza,lista]
     return resultado
 
-
+def llenarLista():
+    lista= []
+    for i in range(0,9):
+        lista.append(random.randrange(1,10))
+    return   lista
 
 comm = MPI.COMM_WORLD  # comunicador entre dos procesadores #
 
@@ -19,9 +23,7 @@ size =  comm.size     # tamano procesador #
 
 
 if rank ==0:
-    lista= []
-    for i in range(0,9):
-        lista.append(random.randrange(1,10))
+    lista = llenarLista()
     comm.send(lista[0:3],dest=1)
     comm.send(lista[3:6],dest=2)
     comm.send(lista[6:9],dest=3)
