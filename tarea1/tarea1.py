@@ -2,11 +2,12 @@ from mpi4py import MPI
 import random
 
 def promedio_varianza(lista):
-    promedio = sum(lista)/3
+    promedio = 0.0
     suma = 0
+    promedio = (lista[0]+lista[1]+lista[2])/3.0
     for i in range(0,3):
-        suma = suma +(lista[i]-promedio)**(lista[i]-promedio)
-    varianza = suma/2
+        suma = suma +(lista[i]-promedio)**2
+    varianza = suma/3.0
     resultado =[promedio,varianza,lista]
     return resultado
 
