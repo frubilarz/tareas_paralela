@@ -1,6 +1,6 @@
-# autor 
-# fernando rubilar 
-# Natalia Faundez 
+# autor
+# fernando rubilar
+# Natalia Faundez
 # Mario urbina
 
 from mpi4py import MPI
