@@ -6,15 +6,21 @@
 from mpi4py import MPI
 import random
 
-def promedio_varianza(lista):
+def promedioLista(lista):
     promedio = 0.0
-    suma = 0
-    promedio = (lista[0]+lista[1]+lista[2])/3.0
-    for i in range(0,3):
-        suma = suma +(lista[i]-promedio)**2
-    varianza = suma/3.0
-    resultado =[promedio,varianza,lista]
-    return resultado
+    for i in range(0,len(lista)):
+        promedio = promedio + lista[i]
+    promedio = promedio/len(lista)
+    return promedio
+
+def varianza(lista):
+    promedio = 0.0
+    suma = 0.0
+    promedio = promedioLista(lista)
+    for i in range(0,len(lista)):
+        suma = suma +(lista[i]**2)-(lista[i]*promedio*2)+(promedio**2)
+    varianza = suma/len(lista)
+    return varianza
 
 def llenarLista():
     lista= []
@@ -34,44 +40,55 @@ if rank ==0:
     comm.send(lista[3:6],dest=2)
     comm.send(lista[6:9],dest=3)
 
+
 if rank ==1:
     lista_recibida = comm.recv(source=0)
-    resultado = promedio_varianza(lista_recibida)
+    promedioLista2 = promedioLista(lista_recibida)
+    varianzaLista2 = varianza(lista_recibida)
+    resultado=[]
+    resultado.append(promedioLista2)
+    resultado.append(varianzaLista2)
     comm.send(resultado, dest =0)
-
 if rank ==2:
     lista_recibida = comm.recv(source=0)
-    resultado = promedio_varianza(lista_recibida)
+    promedioLista2 = promedioLista(lista_recibida)
+    varianzaLista2 = varianza(lista_recibida)
+    resultado=[]
+    resultado.append(promedioLista2)
+    resultado.append(varianzaLista2)
     comm.send(resultado, dest =0)
 
 if rank ==3:
     lista_recibida = comm.recv(source=0)
-    resultado = promedio_varianza(lista_recibida)
+    promedioLista2 = promedioLista(lista_recibida)
+    varianzaLista2 = varianza(lista_recibida)
+    resultado=[]
+    resultado.append(promedioLista2)
+    resultado.append(varianzaLista2)
     comm.send(resultado, dest =0)
-
 
 
 if rank==0:
     resultado1 = comm.recv(source=1)
     resultado2 = comm.recv(source=2)
     resultado3 = comm.recv(source=3)
-    listafinal = []
-    listafinal.append(resultado1[0])
-    listafinal.append(resultado2[0])
-    listafinal.append(resultado3[0])
+    listaPromedio = []
+    listaVarianza = []
+    listaPromedio.append(resultado1[0])
+    listaPromedio.append(resultado2[0])
+    listaPromedio.append(resultado3[0])
 
-    listaresultante = promedio_varianza(listafinal)
-    print "lista 1:     "+str(resultado1[2])
-    print "promedio lista 1:  "+str(resultado1[0])
-    print "varianza lista 1:  "+str(resultado1[1])
+    listaVarianza.append(resultado1[1])
+    listaVarianza.append(resultado2[1])
+    listaVarianza.append(resultado3[1])
+    print "Lista : "+str(lista)
+    print ""
+    for i in range(0, len(listaPromedio)):
+        print "promedio lista "+str(i+1)+" : "+str(listaPromedio[i])
+        print "Varianza lista "+str(i+1)+" : "+str(listaVarianza[i])
 
-    print "lista 2:     "+str(resultado2[2])
-    print "promedio lista 2:  "+str(resultado2[0])
-    print "varianza lista 2:  "+str(resultado2[1])
+    promedioTotal = promedioLista(listaPromedio)
+    varianzaTotal = varianza(lista)
 
-    print "lista 3:     "+str(resultado3[2])
-    print "promedio lista 3:  "+str(resultado3[0])
-    print "varianza lista 3:  "+str(resultado3[1])
-
-    print "lista final promedio:   " +str(listaresultante[0])
-    print "lista final varianza:  " +str(listaresultante[1])
+    print "Promedio total : "+str(promedioTotal)
+    print "Varianza del arreglo: "+ str(varianzaTotal)
