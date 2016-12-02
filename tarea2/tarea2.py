@@ -30,7 +30,7 @@ for i in range(0,size):
     if rank==i:
         promedio = data.get('promedio')
         lista = data.get('lista')
-        buf_list = comm.gather(promedio, root=root)
+        buf_list = comm.gather(promedio, root=0)
 
 
 if rank==0:
