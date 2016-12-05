@@ -41,7 +41,7 @@ for i in range(0,size):
              varianza = diferencias(lista[inicio:termino+1],promedio)
         else:
              varianza = diferencias(lista[inicio:termino+1],promedio)
-        buf_list = comm.gather(varianza, root=0)
+        buf_list = comm.gather(varianza, root=0)# recoge las varianzas de cada procesador y las envia al procesador madre
 
 
 if rank==0:
