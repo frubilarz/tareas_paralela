@@ -1,3 +1,6 @@
+#author: Fernando Rubilar
+#        Natalia Faundez
+#
 from mpi4py import MPI
 import random, decimal
 import numpy
@@ -27,16 +30,13 @@ else:
    d = None
    
 data = comm.bcast(d, root=0)#hace el bcast y lo deja definido como objeto en cada procesador (objetos iguales)
-print "data"+str(data)
 for i in range(0,size):
     if rank==i:
         promedio = data.get('promedio') 
         lista = data.get('lista') 
         termino= i*(100/(size-1)) #divide el largo del arreglo de la lista en la cantidad de procesadores 
         #y lo multiplica por el procesador actual, asi se obtiene la posicion final de cada lista modificado
-        print "[%d] procesador : termino %d"%(rank, termino)
-        inicio = termino-(100/(size-1))# se calcula el inicio de la lista nueva 
-        print "[%d] procesador : inicio %d"%(rank, inicio)
+        inicio = termino-(100/(size-1))# se calcula el inicio de la lista nueva
         if 100%size==0 and (i+1)==size:
              varianza = diferencias(lista[inicio:termino+1],promedio)
         else:
