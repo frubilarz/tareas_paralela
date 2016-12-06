@@ -4,6 +4,8 @@
 from mpi4py import MPI
 import random, decimal
 import numpy
+import time
+t0 = time.time()
 
 comm = MPI.COMM_WORLD #comunicador entre dos procesadores
 size = comm.Get_size() #cantidad de procesadores
@@ -23,7 +25,7 @@ def promedioLista(lista):
     return promedio
 
 if rank == 0:
-   lista= numpy.random.uniform(0,1,100) #devuelve una lista de 100 datos con distribucion de 0  1
+   lista= numpy.random.uniform(0,1,1000000) #devuelve una lista de 100 datos con distribucion de 0  1
    promedioGeneral = promedioLista(lista) #promedio de la lista
    d = dict(lista=lista,promedio = promedioGeneral) #define el objeto de, para tener guardadas las listas con su respectivo promedio
 else:
@@ -52,3 +54,5 @@ if rank==0:
     print "lista : " +str(data.get('lista'))
     print "promedio : "+str(data.get('promedio'))
     print "varianza : " +str(varianza)
+    t1 = time.time()
+    print "el tiempo de ejecucion es ",t1-t0
