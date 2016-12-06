@@ -40,7 +40,7 @@ for i in range(0,size):
         #y lo multiplica por el procesador actual, asi se obtiene la posicion final de cada lista modificado
         inicio = termino-(100/(size-1))# se calcula el inicio de la lista nueva
         if 100%size==0 and (i+1)==size:
-             varianza = diferencias(lista[inicio:termino+1],promedio)
+             varianza = diferencias(lista[inicio:termino],promedio)
         else:
              varianza = diferencias(lista[inicio:termino+1],promedio)
         buf_list = comm.gather(varianza, root=0)# recoge las varianzas de cada procesador y las envia al procesador madre
