@@ -49,6 +49,6 @@ if rank==0:
     for i in range(0,size):
         suma = suma + buf_list[i] #suma las varianzas de cada procesador (muestral)
     varianza = suma/100 #calculo de la varianza poblacional
-    print varianza
-    print data.get('lista')
-    print data.get('promedio')
+    print "lista : " +str(data.get('lista'))
+    print "promedio : "+str(data.get('promedio'))
+    print "varianza : " +str(varianza)
