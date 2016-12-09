@@ -21,23 +21,25 @@ def diferencias(lista, promedio):
 
 if rank == 0:
 	lista= numpy.random.uniform(0,1,100) #devuelve una lista de 100 datos con distribucion de 0 a 1
-	print "la lista inicial es: "+ str(lista) 
-	lista_par=array_split(lista, size) #Divida la lista dada en la cantidad de procesadores 
+	listapar=array_split(lista, size) #divide la lista dada en la cantidad de procesadores -->no estoy muy segura de 
+	#aplicarlo aca y en el archivo del ayudante aparece listapar.array_split creo que deberia 
+	
 else:
 	lista= None
 
 
-repa= comm.scatter(lista_par,root=0) #hace el scatter que consiste en repartir la listan entre los procesadores
+repa= comm.scatter(listapar,root=0) #hace el scatter que consiste en repartir la lista entre los procesadores
 for i in range(0,size):
     if rank==i:    	
-        lista = repa.get('lista_par')
-        promedio = numpy.mean(lista_par)
-        repartir=comm.gather(promedio, root=0) #recoge las listas repartidad de cada procesador y la devuelve al madre
+        promedio = numpy.mean(listapar)
+        repartir=comm.gather(promedio, root=0) #recoge los promedios de cada procesador y la devuelve al madre
 
 if rank==0:
-	print "lista : " +str(lista_par.get('lista'))        
-    t1 = time.time()
-    print "el tiempo de ejecucion es ",t1-t0
+    suma = 0
+    for i in range(0,size):
+        suma = suma + repartir[i] #suma los promedios de cada procesador 
+    media = suma/size #calculo del promedio--->no se si deberia ser dividido en la variable 100 o en size
 
-
+#hasta la parte donde hay que hacer bcast y repartir a todos     
+    
 
