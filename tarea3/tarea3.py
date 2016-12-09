@@ -35,7 +35,7 @@ for i in range(0,size):
         repartir=comm.gather(promedio, root=0) #recoge las listas repartidad de cada procesador y la devuelve al madre
 
 if rank==0:
-	print "lista : " +str(data.get('lista'))        
+	print "lista : " +str(lista_par.get('lista'))        
     t1 = time.time()
     print "el tiempo de ejecucion es ",t1-t0
 
