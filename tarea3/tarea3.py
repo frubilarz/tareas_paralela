@@ -1,3 +1,8 @@
+#problema3 se define una lista en un procesador (madre), se reparte mediante scatter en todos particionando la lista
+#en cada procesador se calcula el promedio y se devuelve al madre mediante gather, se saca la media y mediante bcast se reparte 
+#a todos los nodos y mediante scatter se reparten los promedio de cada lista nuevamente??(nando esta parte no la entiendo muy bien) y 
+#se valcula varianza en cada procesador se envia mediante gather y se saca varianza en el nodo madre
+
 from mpi4py import MPI
 import random, decimal
 import numpy
